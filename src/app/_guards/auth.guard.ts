@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router, 
     private route: ActivatedRoute,
     protected authorizationService: AuthorizationService) { }
-//add testvvvv33355
+
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
     if (localStorage.getItem('currentUser') && route["data"]!=null) {
       const userperm =localStorage.getItem('userpermission')!=null? localStorage.getItem('userpermission'):"";
