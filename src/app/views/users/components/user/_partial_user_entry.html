@@ -1,0 +1,91 @@
+
+<form [formGroup]="userForm" (ngSubmit)="onCreate()">
+  <div class="modal-header">
+          <h4 class="modal-title">{{title}}</h4>
+          <!-- <div *ngIf="isCreate; else updatecondition">
+                  <h4 class="modal-title">User Create</h4>
+                </div>
+                
+                <ng-template #updatecondition>
+                      <h4 class="modal-title">User Update</h4>
+                </ng-template> -->
+ 
+  <button type="button" class="close"  aria-label="Close" (click)="closeModal()" >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+  <div class="modal-body">
+    <input type="hidden" formControlName="id" [(ngModel)]="user.id" />
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input type="text" formControlName="firstName" [(ngModel)]="user.firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+      <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+        <div *ngIf="f.firstName.errors.required">First Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input type="text" formControlName="lastName" [(ngModel)]="user.lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+      <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" formControlName="email" [(ngModel)]="user.email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+        <div *ngIf="f.email.errors.required">Email is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input type="text" formControlName="phone" [(ngModel)]="user.phone" class="form-control" />
+
+    </div>
+
+    <div class="form-group">
+      <label for="selectrole">Select Role</label>
+
+      <select class="form-control" id="ddlrole" name="ddlrole" formControlName="roleid" >
+        <!--<option value="" disabled selected>Please select Role</option>-->
+        <option *ngFor="let _role of roles ;" value="{{_role.id}}">{{_role.name}}</option>
+      </select>
+      <div *ngIf="submitted && f.roleid.errors" class="invalid-feedback">
+        <div *ngIf="f.roleid.errors.required">Role is required</div>
+      </div>
+    </div>
+
+    <div class="form-group" *ngIf="isCreate">
+      <label for="username">Username</label>
+      <input type="text"  formControlName="username"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+      <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+        <div *ngIf="f.username.errors.required">Username is required</div>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="!isCreate">
+      <label for="username">Username</label>
+      <label for="username">{{user.username}}</label>
+      </div>
+    <div class="form-group" *ngIf="isCreate">
+      <label for="password">Password</label>
+      <input type="password" formControlName="password" [(ngModel)]="user.password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+      <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+        <div *ngIf="f.password.errors.required">Password is required</div>
+        <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+      </div>
+    </div>
+
+
+  </div>
+<div class="modal-footer">
+<button type="button"  class="btn btn-secondary" (click)="closeModal()" >Close</button>
+<div *ngIf="isCreate;then create else update">here is ignored</div>    
+<ng-template #create>  <button [disabled]="loading"  class="btn btn-primary" > Create</button></ng-template>
+<ng-template #update>  <button [disabled]="loading"  class="btn btn-primary" > Update</button></ng-template>
+
+<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+</div>
+</form>
+
+
+

@@ -1,0 +1,78 @@
+<h6><i class="fa fa-align-justify"></i> User Details</h6>
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+
+          <a class="btn btn-primary fa fa-user" data-toggle="modal" (click)="cretaeUser()">
+            Create
+          </a>
+          <!-- <a class="pull-right" [routerLink]="['/user/register']">Register</a> -->
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <alert></alert>
+          </div>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>UserName</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Registration</th>
+                <th>Status</th>
+                <th></th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users">
+                <td>  {{user.username}} </td>
+                <td>  {{user.firstName}} </td>
+                <td>  {{user.lastName}} </td>
+                <td>  {{user.email}} </td>
+                <td>  {{user.phone}} </td>
+                <td></td>
+                <td>  {{user.registrationdate  | date:'d MMM yyyy'}} </td>
+                <td>
+                  <div *ngIf="user.isactive; else inactive">
+                    <span class="badge badge-success">Active</span>
+                  </div>
+
+                  <ng-template #inactive>
+                    <span class="badge badge-danger">InActive</span>
+                  </ng-template>
+
+                </td>
+                <td>
+                  <button class="cil-pencil fa fa-pencil text-warning"(click)="editUser(user)"></button>
+                  &nbsp;
+                  <button class="fa fa-trash text-danger" (click)="deleteUser(user.id)"></button>
+                </td>
+
+
+              </tr>
+            </tbody>
+          </table>
+          <nav>
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">4</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

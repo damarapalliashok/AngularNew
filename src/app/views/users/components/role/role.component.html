@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+
+        <a class="btn btn-primary fa fa-user" data-toggle="modal" >
+          Create
+        </a>
+      </div>
+      <div class="card-body">
+        <div class="col-md-offset-1 col-md-10 col-md-offset-1 ">
+
+          <ag-grid-angular style=" height: 350px;"
+                           class="ag-theme-balham"
+                           [enableSorting]="true"
+                           [enableFilter]="true"
+                           [rowData]="rowData | async"
+                           [columnDefs]="columnDefs"
+                           [debug]="true"
+                           [rowSelection]="rowSelection"
+                           [enableColResize]="true"
+                           [paginationPageSize]="paginationPageSize"
+                           [pagination]="true"
+                           [suppressPaginationPanel]="true"
+                           [suppressScrollOnNewData]="true"
+                           (gridReady)="onGridReady($event)">
+
+          </ag-grid-angular>
+
+          <div class="custom-pagination">
+            <div class="row">
+              <div class="col-md-5">
+                <h5>Showing {{(PageSize*(CurrentPage-1))+1}} to {{PageSize*CurrentPage}} of {{TotalItems}} Role(s)</h5>
+              </div>
+              <div class="col-md-7">
+                <nav>
+                  <ul class="pagination" *ngIf="EndPage>1">
+
+                    <li class="page-item" *ngIf="CurrentPage>1"><a class="page-link" (click)="onBtFirst()">First</a></li>
+                    <li class="page-item" *ngIf="CurrentPage>1"><a class="page-link" (click)="onBtPrevious(CurrentPage-1)">Prev</a></li>
+
+                    <li class="page-item" [ngClass]="CurrentPage === item ? 'active' : ''" *ngFor="let item of createRange(StartPage,EndPage);">
+                      <a class="page-link" (click)="onBtPage(item)">{{item}}</a>
+                    </li>
+
+                    <li class="page-item" *ngIf="CurrentPage<TotalPages"><a class="page-link" (click)="onBtNext(CurrentPage+1)">Next</a></li>
+                    <li class="page-item" *ngIf="CurrentPage<TotalPages"><a class="page-link" (click)="onBtLast()">Last</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+  </div>
+</div>
